@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Список заметок</title>
+</head>
+<body>
+<h1>Список заметок</h1>
+<form method="get" th:action="@{/notes}">
+  <input type="text" name="category" placeholder="Категория" />
+  <input type="text" name="title" placeholder="Название" />
+  <button type="submit">Фильтровать</button>
+</form>
+
+<table>
+  <thead>
+  <tr>
+    <th>Название</th>
+    <th>Категория</th>
+    <th>Фото</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="note : ${notes}">
+    <td th:text="${note.title}"></td>
+    <td th:text="${note.category}"></td>
+    <td>
+      <img th:if="${note.photoPath}" th:src="@{/uploads/{filename}(filename=${note.photoPath})}"
+           alt="Фото" style="width:100px;height:100px;" />
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<form method="post" th:action="@{/notes/deleteAll}">
+  <button type="submit" style="margin-top: 20px; background-color: red; color: white;">Удалить все записи</button>
+</form>
+
+<a th:href="@{/notes/new}">Добавить новую заметку</a>
+</body>
+</html>
